@@ -1,7 +1,9 @@
 import nidaqmx
 from nidaqmx.constants import AcquisitionType, RegenerationMode
 import numpy as np
+
 from Signal_Generator import SigGen
+from Risset_Generator import RissetGen
 
 class DAQOutput:
     def __init__(self, device_name="Dev1", channel="ao0", sampling_rate=10000):
@@ -65,10 +67,12 @@ class DAQOutput:
 
 if __name__ == "__main__":
     fs = 10000
-    gen = SigGen(sampling_rate=fs)
+    sig_gen = SigGen(sampling_rate=fs)
+    risset_gen = RissetGen(sampling_rate=fs)
 
     # Generate a short segment to loop (e.g., 2 seconds)
-    shepard_signal = gen.generate_shepard_tone(duration=5)
+    shepard_signal = sig_gen.generate_shepard_tone(duration=5)
+    # shepard_signal = risset_gen.generate_click_train(duration=5)
 
     daq = DAQOutput(sampling_rate=fs)
     
